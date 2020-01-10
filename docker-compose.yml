@@ -1,11 +1,11 @@
-version: '3'
+version: '3.7'
 
 services:
   nginx:
     image: chaberb/nginx-ssl
     depends_on:
-      - web
       - cdn
+      - web
     ports:
       - "443:443"
     volumes:
@@ -13,11 +13,12 @@ services:
 
   web:
     build: web
-    image: chaberb/flask-jwt
     volumes:
       - ./web:/var/www/app
     depends_on:
       - redis
+    environment:
+      - FLASK_DEBUG=True
     ports:
       - "5001:5000"
 

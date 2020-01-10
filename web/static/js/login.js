@@ -1,6 +1,6 @@
 window.addEventListener("load", afterLoad);
 var sendButton;
-
+//TODO chyba nieprzydatny ten js?
 function afterLoad() {
     sendButton = document.getElementById("sendButton")
     sendButton.addEventListener("click", checkData);
