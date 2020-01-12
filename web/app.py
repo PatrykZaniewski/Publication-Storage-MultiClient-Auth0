@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import make_response
+from flask import Response
 from flask import render_template
 from flask import session as se
 from dotenv import load_dotenv, find_dotenv
@@ -219,8 +220,23 @@ def addPubExecutive():
     files = [('files', (f.filename, f.read())) for f in files]
 
     req = requests.post("http://cdn:5000/list", data=objToSend, files=files)
-    print(req, flush=True)
+    if req.status_code == 200:
+        redisConn.postMessage(uid, title)
+
     return redirectCallback(req.text)
+
+
+@app.route('/stream')
+@requires_auth
+def stream():
+    return Response(event_stream(), mimetype="text/event-stream")
+
+
+def event_stream():
+    pubsub = redis.pubsub(ignore_subscribe_messages=True)
+    pubsub.subscribe(se['profile']['name'])
+    for message in pubsub.listen():
+        return 'data: %s\n\n' % message['data']
 
 
 @app.route('/deletepublication', methods=['POST'])

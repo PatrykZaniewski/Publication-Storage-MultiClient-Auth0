@@ -33,7 +33,7 @@ body {
     margin: 0 0 0 0;
 }
 
-.error, .info {
+.error, .info, .warning {
     text-align: center;
     font-size: 14px;
     margin: 0 0 0 0;
@@ -44,6 +44,10 @@ body {
 
 .error {
     color: red;
+}
+
+.warning {
+    color: #ffb700;
 }
 
 .info {
