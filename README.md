@@ -1,5 +1,5 @@
 # File storage app
-Przykładowe dane logowania:
+Przykładowe dane logowania auth0:
 
-login: test<br>
-hasło: 123
+login: smiglowiec@szturmowy.pl<br>
+hasło: apache123!
