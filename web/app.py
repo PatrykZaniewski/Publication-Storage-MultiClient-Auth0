@@ -116,7 +116,6 @@ def welcome():
     return render_template("index.html", uid=uid, listToken=listToken, listOfPublications=listOfPublications,
                            message=message)
 
-
 @app.route('/logout')
 @requires_auth
 def logout():
@@ -204,6 +203,18 @@ def addFilesExecutive():
     return redirectCallback(req.text)
 
 
+@app.route('/stream')
+@requires_auth
+def stream():
+    name = se['profile']['name']
+    def event_stream(name):
+        pubsub = redis.pubsub(ignore_subscribe_messages=True)
+        pubsub.subscribe(name)
+        for message in pubsub.listen():
+            return 'data: %s\n\n' % message['data']
+    return Response(event_stream(name), mimetype="text/event-stream")
+
+
 @app.route('/addpublication', methods=['POST'])
 @requires_auth
 def addPubExecutive():
@@ -220,23 +231,7 @@ def addPubExecutive():
     files = [('files', (f.filename, f.read())) for f in files]
 
     req = requests.post("http://cdn:5000/list", data=objToSend, files=files)
-    if req.status_code == 200:
-        redisConn.postMessage(uid, title)
-
     return redirectCallback(req.text)
-
-
-@app.route('/stream')
-@requires_auth
-def stream():
-    return Response(event_stream(), mimetype="text/event-stream")
-
-
-def event_stream():
-    pubsub = redis.pubsub(ignore_subscribe_messages=True)
-    pubsub.subscribe(se['profile']['name'])
-    for message in pubsub.listen():
-        return 'data: %s\n\n' % message['data']
 
 
 @app.route('/deletepublication', methods=['POST'])

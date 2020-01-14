@@ -36,4 +36,7 @@ class RedisHandler:
     def deleteData(self, uid, pubID):
         self.redisConnection.hdel(uid, pubID)
 
+    def postMessage(self, uid, message):
+        self.redisConnection.publish(uid, message)
+
 

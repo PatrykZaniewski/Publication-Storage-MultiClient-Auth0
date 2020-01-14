@@ -18,9 +18,6 @@ class RedisHandler:
             return False
         return True
 
-    def postMessage(self, uid, message):
-        self.redisConnection.publish(uid, message)
-
     def getMessage(self):
         return self.redisConnection.pubsub(ignore_subscribe_messages=True)
 
