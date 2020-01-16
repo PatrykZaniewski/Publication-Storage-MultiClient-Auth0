@@ -211,7 +211,7 @@ def stream():
         pubsub = redis.pubsub(ignore_subscribe_messages=True)
         pubsub.subscribe(name)
         for message in pubsub.listen():
-            return 'data: %s\n\n' % message['data']
+            yield 'data: %s\n\n' % message['data']
     return Response(event_stream(name), mimetype="text/event-stream")
 
 
