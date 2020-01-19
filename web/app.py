@@ -61,12 +61,10 @@ auth0 = oauth.register(
 
 @app.route('/callbackAuth0')
 def callback_handling():
-    # Handles response from token endpoint
     auth0.authorize_access_token()
     resp = auth0.get('userinfo')
     userinfo = resp.json()
 
-    # Store the user information in flask session.
     se['jwt_payload'] = userinfo
     se['profile'] = {
         'user_id': userinfo['sub'],
@@ -115,6 +113,7 @@ def welcome():
     listOfPublications = json.loads(requests.get("http://cdn:5000/list/" + uid + "?token=" + listToken).content)
     return render_template("index.html", uid=uid, listToken=listToken, listOfPublications=listOfPublications,
                            message=message)
+
 
 @app.route('/logout')
 @requires_auth
@@ -207,11 +206,13 @@ def addFilesExecutive():
 @requires_auth
 def stream():
     name = se['profile']['name']
+    
     def event_stream(name):
-        pubsub = redis.pubsub(ignore_subscribe_messages=True)
+        pubsub = redisConn.getMessage()
         pubsub.subscribe(name)
         for message in pubsub.listen():
             yield 'data: %s\n\n' % message['data']
+
     return Response(event_stream(name), mimetype="text/event-stream")
 
 

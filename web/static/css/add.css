@@ -27,6 +27,14 @@ body {
     border-width: 3px;
 }
 
+.backgroundNotifications {
+    background: grey;
+    color: #000000;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 3px;
+}
+
 .title {
     background: #727272;
     text-align: center;
@@ -37,12 +45,18 @@ body {
     margin: 0 0 0 0;
 }
 
-.error {
+.error, .warning {
     text-align: center;
     font-size: 14px;
     margin: 0 0 0 0;
     border-radius: 2px 2px 0 0;
     text-shadow: 2px 2px black;
-    color: red;
+}
 
+.error {
+    color: red
+}
+
+.warning {
+    color: #ffb700;
 }

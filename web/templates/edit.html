@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Repozytorium plików</title>
-    <script type=text/javascript src='../static/js/edit.js'></script>
+    <script type=text/javascript src='../static/js/add.js'></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/add.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -12,13 +12,13 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div id="col-3" class="col-3">
     </div>
     <div class="col-6">
         <div class="background">
             <h2 class="title" id="title">Edycja publikacji o ID: {{ pid }}</h2>
             <form class="form" action="https://web.company.com/editpublication" method="POST"
-                  enctype="multipartRequest/form-data">
+                  enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Autor:</label>
