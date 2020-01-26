@@ -42,7 +42,6 @@ AUTH0_AUDIENCE = getenv("AUTH0_AUDIENCE")
 
 redis = redis.Redis(host="redis", port="6379", decode_responses=True)
 redisConn = redisHandler.RedisHandler(redis)
-redisConn.initUser()
 
 session = sessionHandler.SessionHandler(redis)
 
